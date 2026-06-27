@@ -1,0 +1,120 @@
+/* Overlay text positioned over the 3D canvas.
+ *
+ * .scroll-text covers the full viewport (fixed) with pointer-events: none
+ * so clicks pass through to the canvas underneath. Individual text items
+ * restore pointer-events when visible for link/interaction support.
+ *
+ * Items alternate left/right alignment. Each item fades via opacity/transform
+ * driven by inline styles from ScrollText.jsx.
+ *
+ * Scroll indicators bounce up/down with CSS keyframe animations.
+ */
+
+.scroll-text {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+
+  &__item {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    max-width: 420px;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  }
+
+  &__item--left {
+    left: 48px;
+    text-align: left;
+
+    .scroll-text__title {
+      border-left: 5px solid #fff;
+      padding-left: 18px;
+    }
+  }
+
+  &__item--right {
+    right: 48px;
+    text-align: right;
+
+    .scroll-text__title {
+      border-right: 5px solid #fff;
+      padding-right: 18px;
+    }
+  }
+
+  &__title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 0 0 12px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.4;
+  }
+
+  &__scroll-indicator {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+    animation: scrollBounce 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  &__scroll-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+  }
+
+  &__scroll-arrow {
+    font-size: 1.5rem;
+    opacity: 0.6;
+  }
+
+  &__scroll-indicator--up {
+    animation: scrollBounceUp 2s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    &__item--right {
+      right: 33px;
+    }
+  }
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+  }
+}
+
+@keyframes scrollBounceUp {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+}

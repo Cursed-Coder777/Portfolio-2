@@ -1,0 +1,54 @@
+/* Global layout — scroll container + fixed canvas overlay.
+ *
+ * #scroll-container is a tall, invisible div that provides the page's
+ * scroll height (7000vh). The taller it is, the slower the camera moves
+ * per mouse-wheel tick.
+ *
+ * #canvas-wrapper is position:fixed and covers the viewport. No
+ * pointer-events: none here — native scroll passes through because
+ * the browser scrolls the viewport independently of fixed elements.
+ *
+ * The Canvas inside uses eventSource={document.getElementById("root")}
+ * so R3F captures pointer events that bubble up through the wrapper.
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Eagle Lake", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.no-scroll,
+html.no-scroll body {
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+/* Controls scroll speed — larger value = slower camera movement */
+#scroll-container {
+  height: 7000vh;
+}
+
+/* Fixed overlay holding the R3F Canvas and ScrollText overlay */
+#canvas-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+button {
+  font-family: inherit;
+}

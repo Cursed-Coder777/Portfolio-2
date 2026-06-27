@@ -1,0 +1,19 @@
+// Global styles entry point.
+// Loads the Eagle Lake font-face and Meyer reset,
+// then applies universal box-sizing and font rendering optimizations.
+
+@use "./styles/fonts.scss";
+@use "./styles/reset.scss";
+
+@forward "./styles/fonts.scss";
+@forward "./styles/reset.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
