@@ -12,6 +12,11 @@
  * so R3F captures pointer events that bubble up through the wrapper.
  */
 
+::selection {
+  background: #ff7700;
+  color: #fff;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +44,7 @@ html.no-scroll body {
 
 /* Controls scroll speed — larger value = slower camera movement */
 #scroll-container {
-  height: 7000vh;
+  height: 6000vh;
 }
 
 /* Fixed overlay holding the R3F Canvas and ScrollText overlay */
