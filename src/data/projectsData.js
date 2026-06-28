@@ -219,6 +219,45 @@ export const projectsData = [
     },
     category: "fullstack",
   },
+  {
+    id: "seraph-kamos",
+    name: "Seraph Kamos",
+    description:
+      "Scroll-driven visual storytelling website for a fictional sustainable fashion brand. Animates a single DOM element across multiple scroll waypoints using GSAP Flip and ScrollTrigger, creating seamless image transformations. Includes product, blog, about, and contact pages.",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "GSAP",
+      "Lenis",
+      "Tailwind CSS",
+      "React Compiler",
+    ],
+    links: {
+      live: "https://seraph-kamos.vercel.app/",
+      repo: "https://github.com/Cursed-Coder777/sarpha-kamos",
+    },
+    category: "frontend",
+  },
+  {
+    id: "gamezone",
+    name: "GameZone",
+    description:
+      "Scroll-driven image morphing experience where images transition between different clip-path polygon shapes as the user scrolls, paired with staggered character-reveal text animations. Built with GSAP ScrollTrigger, Lenis smooth scroll, and Splitting.js text effects.",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "GSAP",
+      "Lenis",
+      "Splitting.js",
+      "Tailwind CSS",
+      "React Compiler",
+    ],
+    links: {
+      live: "https://game-zone-eosin.vercel.app/",
+      repo: "https://github.com/Cursed-Coder777/GameZone",
+    },
+    category: "frontend",
+  },
 ];
 
 export const projectCategories = [

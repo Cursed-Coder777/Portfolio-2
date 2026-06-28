@@ -34,9 +34,9 @@ export const modalContent = {
         url: "https://zara-perfumes.vercel.app/",
       },
       {
-        name: "Unsplash Clone",
-        text: " — Full-stack image gallery with AI generation, masonry layouts, and PWA support.",
-        url: "https://unsplash-clone-pied.vercel.app/",
+        name: "Seraph Kamos",
+        text: " — Scroll-driven storytelling with GSAP Flip morphing and Lenis smooth scroll.",
+        url: "https://seraph-kamos.vercel.app/",
       },
       {
         name: "X Clone",
@@ -66,7 +66,7 @@ export const modalContent = {
       {
         name: "And more",
         text: " — each project reflects a love for clean code, 3D creativity, and thoughtful UX.",
-        url: "https://github.com/Cursed-Coder777",
+        url: "/projects",
       },
     ],
   },

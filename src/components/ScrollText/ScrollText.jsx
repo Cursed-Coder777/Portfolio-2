@@ -36,7 +36,7 @@ const texts = [
     side: "left",
     progressRange: [0.35, 0.6],
     title: "Featured Projects",
-    subtitle: "12 projects — 3D worlds, e-commerce, full-stack apps & more",
+    subtitle: "14 projects — 3D worlds, e-commerce, full-stack apps & more",
   },
   {
     id: 4,
