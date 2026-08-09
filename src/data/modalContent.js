@@ -9,8 +9,8 @@ export const modalContent = {
     link: "https://github.com/Cursed-Coder777",
     linkText: "View GitHub",
     paragraphs: [
-      "I'm Cursed Coder, a full-stack developer who specializes in building immersive 3D web experiences. From interactive Three.js worlds to full-featured Next.js applications, I blend creative design with solid engineering to ship polished, performant products.",
-      "My work spans award-winning 3D portfolios, e-commerce platforms, real-time collaborative apps, and experimental WebGL scenes — always pushing what's possible in the browser.",
+      "I'm Cursed Coder, a full-stack developer who specializes in building immersive 3D web experiences. From WebGL and WebGPU worlds with custom GLSL/TSL shaders to full-featured Next.js applications, I blend creative design with solid engineering to ship polished, performant products.",
+      "My work spans an FWA-recognized 3D museum portfolio, e-commerce platforms with Stripe checkout and admin panels, real-time social apps with tRPC, AI-powered image galleries, and scroll-driven storytelling sites — always pushing what's possible in the browser.",
     ],
   },
   thecollective: {
@@ -19,19 +19,19 @@ export const modalContent = {
     linkText: "View all projects →",
     paragraphs: [
       {
-        name: "Suburbia",
-        text: " — Skateboarding brand with a 3D board builder, Matter.js physics, and CMS-driven content.",
-        url: "https://suburbia-3d-dev-me.vercel.app/",
+        name: "Fizzi",
+        text: " — Soda brand marketing site with Prismic CMS and 3D product scenes.",
+        url: "https://fizzi-3d-dev-me.vercel.app/",
+      },
+      {
+        name: "Koisei",
+        text: " — Cinematic sakura-river narrative with GLSL shaders, petal physics, and scroll-scrubbed film sections.",
+        url: "https://koisei-six.vercel.app/",
       },
       {
         name: "Nimbus Keyboards",
         text: " — Mechanical keyboard store with 3D product showcases and Prismic CMS.",
         url: "https://nimbus-keyboards-3d-dev-me.vercel.app/",
-      },
-      {
-        name: "Zara Perfumes",
-        text: " — Premium perfume e-commerce with Stripe, 3D hero fluid animation, and admin panel.",
-        url: "https://zara-perfumes.vercel.app/",
       },
       {
         name: "Seraph Kamos",
@@ -44,34 +44,9 @@ export const modalContent = {
         url: "https://xtynct.vercel.app/",
       },
       {
-        name: "Koisei",
-        text: " — Cinematic sakura-river narrative with GLSL shaders, petal physics, and scroll-scrubbed film sections.",
-        url: "https://koisei-six.vercel.app/",
-      },
-      {
         name: "Designer Portfolio",
         text: " — Scroll-driven creative studio portfolio with pinned reveals, book flips, and puzzle assembly.",
         url: "https://designer-portfolio-3d-dev-me.vercel.app/",
-      },
-      {
-        name: "X Clone",
-        text: " — Twitter clone with real-time posts, DMs, polls, notifications, and trending hashtags.",
-        url: "https://x-3d-dev-me.vercel.app/",
-      },
-      {
-        name: "Fizzi",
-        text: " — Soda brand marketing site with Prismic CMS and 3D product scenes.",
-        url: "https://fizzi-3d-dev-me.vercel.app/",
-      },
-      {
-        name: "Heaven Homes",
-        text: " — Real estate platform with property listings, 3D virtual tours, and interactive neighborhood maps.",
-        url: "https://heaven-homes-3d-dev-me.vercel.app/",
-      },
-      {
-        name: "Cozy Cafes",
-        text: " — 3D interactive split-screen cafe comparison with Blender models.",
-        url: "https://cozy-cafes.vercel.app/",
       },
       {
         name: "And more",
@@ -85,12 +60,12 @@ export const modalContent = {
     link: "#",
     linkText: "View tech stack",
     paragraphs: [
-      "Frontend: React, Next.js, TypeScript, Tailwind CSS, GSAP, Framer Motion, Sass",
-      "3D & Creative: Three.js, React Three Fiber, WebGL, Blender, OGL, Matter.js",
-      "Backend & Data: Node.js, tRPC, Prisma, Drizzle ORM, PostgreSQL, MongoDB, SQLite",
+      "Frontend: React 19, Next.js 16, TypeScript, Tailwind CSS, Sass, GSAP, Framer Motion, Lenis, Splitting.js, React Compiler",
+      "3D & Creative: Three.js, React Three Fiber, WebGL, WebGPU, GLSL/TSL Shaders, Blender, OGL, Matter.js",
+      "Backend & Data: Node.js, tRPC, Prisma, Drizzle ORM, PostgreSQL, MongoDB, Turso, Zod",
       "Auth & Payments: NextAuth, better-auth, Stripe",
-      "CMS & Cloud: Prismic CMS, Cloudinary, Vercel, Neon",
-      "Tools: Git, pnpm, Zustand, TanStack Query, Radix UI, shadcn/ui",
+      "CMS & Cloud: Prismic CMS, Cloudinary, Vercel Blob, Supabase, Neon, PWA",
+      "Tools: Git, pnpm, Zustand, TanStack Query, Radix UI, shadcn/ui, Howler.js",
     ],
   },
   developerspotlight: {
@@ -98,7 +73,7 @@ export const modalContent = {
     link: "https://github.com/Cursed-Coder777",
     linkText: "View resume",
     paragraphs: [
-      "I've built and shipped 15 full-stack projects spanning 3D interactive experiences, e-commerce platforms, social media clones, and creative marketing sites.",
+      "I've built and shipped 13 full-stack projects spanning 3D interactive experiences, e-commerce platforms, social media clones, and creative marketing sites.",
       "My work has been recognized in the Codrops FWA (Site of the Day) for the 'house-portfolio' 3D fan museum experience. I'm passionate about pushing browser capabilities — combining WebGL, smooth animations, and rock-solid backend architecture.",
       "Currently exploring AI integration, advanced shader techniques, and performance optimization for complex 3D web applications.",
     ],

@@ -146,26 +146,6 @@ export const projectsData = [
     category: "interactive",
   },
   {
-    id: "portfolio-1",
-    name: "Portfolio",
-    description:
-      "3D portfolio with interactive elements — tilt effects, vertical timeline, contact form via EmailJS, 3D scene integration with React Three Fiber, and Vercel analytics/speed-insights.",
-    tech: [
-      "Next.js 16",
-      "React 19",
-      "R3F",
-      "Three.js",
-      "Framer Motion",
-      "GSAP",
-      "EmailJS",
-    ],
-    links: {
-      live: "https://portfolio-1-alpha-gold.vercel.app/",
-      repo: "https://github.com/Cursed-Coder777/Portfolio-1",
-    },
-    category: "interactive",
-  },
-  {
     id: "unsplash-clone",
     name: "Unsplash Clone",
     description:
