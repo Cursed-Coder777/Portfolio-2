@@ -21,12 +21,12 @@ export const modalContent = {
       {
         name: "Suburbia",
         text: " — Skateboarding brand with a 3D board builder, Matter.js physics, and CMS-driven content.",
-        url: "https://suburbia-mocha.vercel.app/",
+        url: "https://suburbia-3d-dev-me.vercel.app/",
       },
       {
         name: "Nimbus Keyboards",
         text: " — Mechanical keyboard store with 3D product showcases and Prismic CMS.",
-        url: "https://nimbus-keyboards-seven.vercel.app/",
+        url: "https://nimbus-keyboards-3d-dev-me.vercel.app/",
       },
       {
         name: "Zara Perfumes",
@@ -39,24 +39,34 @@ export const modalContent = {
         url: "https://seraph-kamos.vercel.app/",
       },
       {
+        name: "XTYNCT",
+        text: " — Gaming brand showcase with clip-path shape morphing and staggered text reveals.",
+        url: "https://xtynct.vercel.app/",
+      },
+      {
+        name: "Koisei",
+        text: " — Cinematic sakura-river narrative with GLSL shaders, petal physics, and scroll-scrubbed film sections.",
+        url: "https://koisei-six.vercel.app/",
+      },
+      {
+        name: "Designer Portfolio",
+        text: " — Scroll-driven creative studio portfolio with pinned reveals, book flips, and puzzle assembly.",
+        url: "https://designer-portfolio-3d-dev-me.vercel.app/",
+      },
+      {
         name: "X Clone",
         text: " — Twitter clone with real-time posts, DMs, polls, notifications, and trending hashtags.",
-        url: "https://x-pi-inky.vercel.app/",
+        url: "https://x-3d-dev-me.vercel.app/",
       },
       {
         name: "Fizzi",
         text: " — Soda brand marketing site with Prismic CMS and 3D product scenes.",
-        url: "https://fizzi-phi-eight.vercel.app/",
+        url: "https://fizzi-3d-dev-me.vercel.app/",
       },
       {
         name: "Heaven Homes",
         text: " — Real estate platform with property listings, 3D virtual tours, and interactive neighborhood maps.",
-        url: "https://portfolio-1-alpha-gold.vercel.app/",
-      },
-      {
-        name: "Cocktails",
-        text: " — Award-winning UI clone with cinematic GSAP scroll animations.",
-        url: "https://portfolio-1-alpha-gold.vercel.app/",
+        url: "https://heaven-homes-3d-dev-me.vercel.app/",
       },
       {
         name: "Cozy Cafes",
@@ -88,7 +98,7 @@ export const modalContent = {
     link: "https://github.com/Cursed-Coder777",
     linkText: "View resume",
     paragraphs: [
-      "I've built and shipped 12 full-stack projects spanning 3D interactive experiences, e-commerce platforms, social media clones, and creative marketing sites.",
+      "I've built and shipped 15 full-stack projects spanning 3D interactive experiences, e-commerce platforms, social media clones, and creative marketing sites.",
       "My work has been recognized in the Codrops FWA (Site of the Day) for the 'house-portfolio' 3D fan museum experience. I'm passionate about pushing browser capabilities — combining WebGL, smooth animations, and rock-solid backend architecture.",
       "Currently exploring AI integration, advanced shader techniques, and performance optimization for complex 3D web applications.",
     ],

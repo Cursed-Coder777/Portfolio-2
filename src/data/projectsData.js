@@ -15,7 +15,7 @@ export const projectsData = [
       "Framer Motion",
     ],
     links: {
-      live: "https://x-pi-inky.vercel.app/",
+      live: "https://x-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/X",
     },
     category: "fullstack",
@@ -58,7 +58,7 @@ export const projectsData = [
       "Tailwind CSS",
     ],
     links: {
-      live: "https://suburbia-mocha.vercel.app/",
+      live: "https://suburbia-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/suburbia",
     },
     category: "interactive",
@@ -80,7 +80,7 @@ export const projectsData = [
       "GLSL",
     ],
     links: {
-      live: "https://house-portfolio-vert.vercel.app/",
+      live: "https://portfolio-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/house-portfolio",
     },
     category: "interactive",
@@ -100,7 +100,7 @@ export const projectsData = [
       "Tailwind CSS",
     ],
     links: {
-      live: "https://fizzi-phi-eight.vercel.app/",
+      live: "https://fizzi-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/fizzi",
     },
     category: "interactive",
@@ -120,7 +120,7 @@ export const projectsData = [
       "TSL",
     ],
     links: {
-      live: "https://alpha-chads-cozy-cafes.vercel.app/",
+      live: "https://cozy-cafes.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/Cozy-Cafes",
     },
     category: "interactive",
@@ -140,7 +140,7 @@ export const projectsData = [
       "Tailwind CSS",
     ],
     links: {
-      live: "https://nimbus-keyboards-seven.vercel.app/",
+      live: "https://nimbus-keyboards-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/Nimbus-Keyboards",
     },
     category: "interactive",
@@ -181,22 +181,10 @@ export const projectsData = [
       "PWA",
     ],
     links: {
-      live: "https://unsplash-clone-pied.vercel.app/",
+      live: "https://unsplash-clone-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/unsplash-clone",
     },
     category: "fullstack",
-  },
-  {
-    id: "cocktails",
-    name: "Cocktails",
-    description:
-      "Award-winning UI clone with cinematic GSAP scroll animations, modular React components, responsive design, and premium Tailwind CSS styling — delivering an incredible UI/UX experience.",
-    tech: ["React 19", "Tailwind CSS v4", "GSAP", "Vite"],
-    links: {
-      live: "https://cocktails-sage.vercel.app/",
-      repo: "https://github.com/Cursed-Coder777/Cocktails",
-    },
-    category: "frontend",
   },
   {
     id: "heaven-homes",
@@ -214,7 +202,7 @@ export const projectsData = [
       "Zod",
     ],
     links: {
-      live: "https://heaven-homes.vercel.app/",
+      live: "https://heaven-homes-3d-dev-me.vercel.app/",
       repo: "https://github.com/Cursed-Coder777/heaven-homes",
     },
     category: "fullstack",
@@ -239,10 +227,51 @@ export const projectsData = [
     category: "frontend",
   },
   {
-    id: "gamezone",
-    name: "GameZone",
+    id: "designer-portfolio",
+    name: "Designer Portfolio",
     description:
-      "Scroll-driven image morphing experience where images transition between different clip-path polygon shapes as the user scrolls, paired with staggered character-reveal text animations. Built with GSAP ScrollTrigger, Lenis smooth scroll, and Splitting.js text effects.",
+      "Immersive scroll-driven portfolio for a creative direction studio with 14 sections — scrubbed hero timeline (hole expands, hand emerges), pinned image-reveal with torn-hole mask scaling, sticky process cards, glass-lens hover mask, scroll-driven book leaf flips, puzzle-piece assembly, velocity-driven marquees, and magnetic hover interactions. Built with React Compiler for optimal performance.",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "GSAP",
+      "ScrollTrigger",
+      "Tailwind CSS",
+      "React Compiler",
+      "TypeScript",
+    ],
+    links: {
+      live: "https://designer-portfolio-3d-dev-me.vercel.app/",
+      repo: "https://github.com/Cursed-Coder777/Designer-Portfolio",
+    },
+    category: "frontend",
+  },
+  {
+    id: "koisei",
+    name: "Koisei",
+    description:
+      "\"Down the Spring River\" — a cinematic scroll-driven narrative tracing the sakura river from Kyoto to Tokyo. Features a hero with wave-distortion GLSL shader and mouse ripple, an instanced sakura petal system with physics (380 petals), scroll-scrubbed video sections with chapter overlays, horizontal card gallery, FBM-noise day-to-night dissolve shader, and CSS-sticky film sections with poetic chapter text.",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "Three.js",
+      "GLSL",
+      "GSAP",
+      "Lenis",
+      "Tailwind CSS",
+      "React Compiler",
+    ],
+    links: {
+      live: "https://koisei-six.vercel.app/",
+      repo: "https://github.com/Cursed-Coder777/Koisei",
+    },
+    category: "interactive",
+  },
+  {
+    id: "xtynct",
+    name: "XTYNCT",
+    description:
+      "Gaming brand showcase with clip-path shape morphing — images transition between polygon shapes (triangle → hexagon → circle → custom) as the user scrolls, paired with staggered character-reveal text animations via Splitting.js and an interactive 3D tilt effect. Dark cyberpunk palette with deep navy base and violet/magenta accents.",
     tech: [
       "Next.js 16",
       "React 19",
@@ -251,10 +280,11 @@ export const projectsData = [
       "Splitting.js",
       "Tailwind CSS",
       "React Compiler",
+      "TypeScript",
     ],
     links: {
-      live: "https://game-zone-eosin.vercel.app/",
-      repo: "https://github.com/Cursed-Coder777/GameZone",
+      live: "https://xtynct.vercel.app/",
+      repo: "https://github.com/Cursed-Coder777/XTYNCT",
     },
     category: "frontend",
   },
