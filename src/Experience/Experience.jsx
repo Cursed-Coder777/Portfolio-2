@@ -8,32 +8,39 @@
 // The Canvas uses eventSource={document.getElementById("root")} so pointer
 // events bubble past the fixed wrapper and are captured by R3F's event system.
 
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Scene from "./Scene";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import { PerspectiveCamera } from "@react-three/drei";
 import ScrollText from "../components/ScrollText/ScrollText";
 
-const Experience = ({ scrollProgressRef }) => {
-  const camera = useRef();
-  const cameraGroup = useRef();
-  const mousePositionOffset = useRef(new THREE.Vector3());
-  const mouseRotationOffset = useRef(new THREE.Euler());
+// The overlay owns the scroll-driven React state. Keeping it in a child means
+// scrolling updates the text without re-rendering the Canvas/Scene tree.
+const ScrollTextOverlay = ({ scrollProgressRef }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Poll scrollProgressRef on every frame — only update React state when
-  // the value actually changes (bail-out optimization).
   useEffect(() => {
     let rafId;
     const update = () => {
       const next = scrollProgressRef.current;
-      setScrollProgress((prev) => (Math.abs(prev - next) > 0.001 ? next : prev));
+      setScrollProgress((prev) =>
+        Math.abs(prev - next) > 0.001 ? next : prev
+      );
       rafId = requestAnimationFrame(update);
     };
     rafId = requestAnimationFrame(update);
     return () => cancelAnimationFrame(rafId);
   }, [scrollProgressRef]);
+
+  return <ScrollText progress={scrollProgress} />;
+};
+
+const Experience = ({ scrollProgressRef }) => {
+  const camera = useRef();
+  const cameraGroup = useRef();
+  const mousePositionOffset = useRef(new THREE.Vector3());
+  const mouseRotationOffset = useRef(new THREE.Euler());
 
   // Track mouse for parallax camera offset + slight rotation
   useEffect(() => {
@@ -63,7 +70,7 @@ const Experience = ({ scrollProgressRef }) => {
 
   return (
     <>
-      <ScrollText progress={scrollProgress} />
+      <ScrollTextOverlay scrollProgressRef={scrollProgressRef} />
       <Canvas eventSource={document.getElementById("root")}>
         <group ref={cameraGroup}>
           <PerspectiveCamera ref={camera} fov={72} makeDefault />

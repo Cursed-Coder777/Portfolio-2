@@ -98,7 +98,60 @@
   height: 100%;
   background-color: #ffffff;
   border: 1px solid black;
+  transition: width 0.45s ease;
   will-change: width;
+}
+
+.loading-screen__progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-screen__status {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.loading-screen__slow {
+  width: min(460px, calc(100% - 40px));
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(11, 11, 11, 0.85);
+  text-align: center;
+}
+
+.loading-screen__slow-message {
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.loading-screen__slow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-screen__projects-link {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 13px;
+  text-decoration: none;
+
+  &:hover {
+    background: #fff;
+    color: #0b0b0b;
+  }
 }
 
 .percentage {

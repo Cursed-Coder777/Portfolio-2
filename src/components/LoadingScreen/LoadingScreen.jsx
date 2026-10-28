@@ -1,90 +1,75 @@
 // Loading screen — the first thing the user sees.
 //
 // Flow:
-//   1. Shows a progress bar driven by loadedChunks / totalChunks from store.
-//      The percentage animates smoothly (not a jump) via a RAF loop.
-//   2. Once all 4 chunks are loaded AND the animation ticks to 100%,
-//      an "Enter" button appears (no jump — user sees 100 → button).
-//   3. User clicks "Enter" → isRevealed = true:
+//   1. The bar animates quickly to 20%, then advances only as real chunks of
+//      the 3D scene finish loading (20% → 100%). It never claims to be almost
+//      finished while nothing has loaded.
+//   2. Once all 4 chunks are loaded, an "Enter" button appears.
+//   3. If assets are still loading after 15 seconds, the user can continue
+//      anyway (the scene keeps streaming in) or jump to the project archive.
+//      This guarantees the page can never be trapped on the loading screen.
+//   4. User clicks "Enter" → isRevealed = true:
 //      - Top half slides up (translateY(-100%))
 //      - Bottom half slides down (translateY(100%))
 //      - Background music + ambience start playing
-//      - isExperienceReady = true (enables scroll listener + Lenis)
-//   4. After the CSS transition ends, the component returns null (unmounts).
+//      - isExperienceReady = true (enables the scroll listener)
+//   5. After the CSS transition ends (or a 2s fallback), it unmounts.
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./LoadingScreen.scss";
 import { playBackgroundMusic, playSound } from "../../utils/audioSystem.js";
 import { useExperienceStore } from "../../stores/experienceStore.js";
 
+const SLOW_LOAD_TIMEOUT_MS = 15000;
+const QUICK_PROGRESS_TARGET = 20;
+
 const LoadingScreen = () => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isAnimationFinished, setIsAnimationFinished] = useState(false);
-  const [displayedProgress, setDisplayedProgress] = useState(0);
-  const [hasCompletedAnimation, setHasCompletedAnimation] = useState(false);
   const [quickProgress, setQuickProgress] = useState(0);
-  const animationRef = useRef(null);
+  const [isSlowLoading, setIsSlowLoading] = useState(false);
 
   const { setIsExperienceReady, loadedChunks, totalChunks } =
     useExperienceStore();
 
-  // Fake progress: rushes 0 → 80 in ~700ms so the bar feels snappy.
-  // The real chunk progress (0–100%) is mapped to the remaining 80–100%
-  // range, so the final stretch waits on actual asset loading.
-  const realRatio = loadedChunks / totalChunks;
+  // Fast initial movement so the screen feels responsive, then real progress
+  // takes over. The old implementation jumped straight to 80% and could sit
+  // there forever while 29 MB of models were still downloading.
+  const realRatio = totalChunks > 0 ? loadedChunks / totalChunks : 1;
   const loadingProgress = Math.round(
-    Math.min(100, quickProgress + realRatio * 20)
+    Math.min(
+      100,
+      quickProgress + realRatio * (100 - QUICK_PROGRESS_TARGET)
+    )
   );
   const isLoading = loadedChunks < totalChunks;
+  const isReadyToEnter = !isLoading && loadingProgress >= 100;
 
-  // Quick-start animation: ease-out cubic over 700ms, 0 → 80
+  // Quick-start animation: ease-out cubic over 700ms, 0 → 20.
   useEffect(() => {
     const start = performance.now();
     const DURATION = 700;
     let raf;
     const tick = (now) => {
       const t = Math.min(1, (now - start) / DURATION);
-      const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-      setQuickProgress(eased * 80);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setQuickProgress(eased * QUICK_PROGRESS_TARGET);
       if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // Smoothly animate the displayed percentage toward the blended target.
-  // Using RAF with a step function gives a nice easing effect.
+  // Offer an escape hatch instead of leaving the visitor on a frozen bar.
   useEffect(() => {
-    if (loadingProgress <= displayedProgress) {
-      if (loadingProgress >= 100) {
-        setHasCompletedAnimation(true);
-      }
-      return;
-    }
+    if (isRevealed || isReadyToEnter) return undefined;
 
-    const animate = () => {
-      setDisplayedProgress((prev) => {
-        if (prev >= loadingProgress) {
-          if (loadingProgress >= 100) {
-            setHasCompletedAnimation(true);
-          }
-          return loadingProgress;
-        }
-        const step = Math.max(1, Math.ceil((loadingProgress - prev) * 0.1));
-        const next = Math.min(loadingProgress, prev + step);
-        animationRef.current = requestAnimationFrame(animate);
-        return next;
-      });
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [loadingProgress]);
+    const timer = window.setTimeout(
+      () => setIsSlowLoading(true),
+      SLOW_LOAD_TIMEOUT_MS
+    );
+    return () => window.clearTimeout(timer);
+  }, [isRevealed, isReadyToEnter]);
 
   const handleReveal = () => {
     setIsRevealed(true);
@@ -94,25 +79,26 @@ const LoadingScreen = () => {
     setIsExperienceReady();
   };
 
-  // Fires after the CSS slide transition completes (500ms delay + 1s transition)
+  // Fires after the CSS slide transition completes (500ms delay + 1s
+  // transition). The timer below is a safety net for reduced-motion or a
+  // missed transition event, which would otherwise leave the overlay forever.
   const handleAnimationFinished = () => {
     setIsAnimationFinished(true);
   };
+
+  useEffect(() => {
+    if (!isRevealed) return undefined;
+    const timer = window.setTimeout(() => setIsAnimationFinished(true), 2000);
+    return () => window.clearTimeout(timer);
+  }, [isRevealed]);
 
   if (isAnimationFinished) {
     return null;
   }
 
-  // Only show the Enter button when:
-  //   - All chunks are loaded
-  //   - The progress animation has visually reached 100
-  //   - The screen hasn't been revealed yet
-  // This avoids a jarring jump from e.g. 80% → Enter button.
-  const showEnterButton =
-    !isLoading &&
-    loadedChunks >= totalChunks &&
-    hasCompletedAnimation &&
-    !isRevealed;
+  const showEnterButton = isReadyToEnter && !isRevealed;
+  const showContinueButton = isSlowLoading && !isReadyToEnter && !isRevealed;
+  const showProgress = !isRevealed && !showEnterButton;
 
   return (
     <>
@@ -131,21 +117,59 @@ const LoadingScreen = () => {
             Scroll or Drag to Explore
           </div>
 
-          {!isRevealed && !showEnterButton && (
-            <div className="loading-bar-container">
+          {showProgress && (
+            <div className="loading-screen__progress">
               <div
-                className="loading-bar"
-                style={{ width: `${Math.min(displayedProgress, 100)}%` }}
-              ></div>
-              <div className="percentage">
-                {Math.min(displayedProgress, 100)}%
+                className="loading-bar-container"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={loadingProgress}
+                aria-label="Loading 3D portfolio"
+              >
+                <div
+                  className="loading-bar"
+                  style={{ width: `${loadingProgress}%` }}
+                ></div>
               </div>
-              <div className="loading-spinner"></div>
+              <div className="percentage" aria-live="polite">
+                {loadingProgress}%
+              </div>
+              <div className="loading-screen__status">
+                Loading 3D world · {Math.min(loadedChunks, totalChunks)}/
+                {totalChunks} sections
+              </div>
+              <div className="loading-spinner" aria-hidden="true"></div>
+            </div>
+          )}
+
+          {showContinueButton && (
+            <div className="loading-screen__slow" role="status">
+              <p className="loading-screen__slow-message">
+                The 3D scene is taking longer than expected. You can continue
+                while the remaining models finish loading.
+              </p>
+              <div className="loading-screen__slow-actions">
+                <button
+                  type="button"
+                  className="loading-screen-button"
+                  onClick={handleReveal}
+                >
+                  Continue anyway
+                </button>
+                <a className="loading-screen__projects-link" href="/projects">
+                  View projects
+                </a>
+              </div>
             </div>
           )}
 
           {showEnterButton && (
-            <button className="loading-screen-button" onClick={handleReveal}>
+            <button
+              type="button"
+              className="loading-screen-button"
+              onClick={handleReveal}
+            >
               &nbsp; &nbsp; &nbsp; Enter &nbsp; &nbsp; &nbsp;
             </button>
           )}

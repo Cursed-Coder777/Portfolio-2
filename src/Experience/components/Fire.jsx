@@ -2,7 +2,7 @@
 // Places braziers and torches throughout the scene with optional positional audio.
 import * as THREE from "three";
 import { useLayoutEffect, useRef, useEffect } from "react";
-import { extend, useLoader } from "@react-three/fiber";
+import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { PositionalAudio } from "@react-three/drei";
 import { useExperienceStore } from "../../stores/experienceStore";
 import { getAudioFileExtension } from "../../utils/platformDetector";
@@ -174,7 +174,7 @@ class FireMaterial extends THREE.ShaderMaterial {
 
 extend({ FireMaterial });
 
-function FireElement({ color, time, withAudio = false, ...props }) {
+function FireElement({ color, withAudio = false, ...props }) {
   const meshRef = useRef();
   const materialRef = useRef();
   const audioRef = useRef();
@@ -194,16 +194,19 @@ function FireElement({ color, time, withAudio = false, ...props }) {
     materialRef.current.uniforms.seed.value = Math.random() * 19.19;
   }, [texture, color]);
 
-  useEffect(() => {
+  // Animate the raymarched fire in the render loop. This used to depend on a
+  // `time` prop that only changed because Scene re-rendered every frame.
+  useFrame((state) => {
     if (!meshRef.current || !materialRef.current) return;
 
-    const invModelMatrix = materialRef.current.uniforms.invModelMatrix.value;
     meshRef.current.updateMatrixWorld();
-    invModelMatrix.copy(meshRef.current.matrixWorld).invert();
-    materialRef.current.uniforms.time.value = time;
-    materialRef.current.uniforms.invModelMatrix.value = invModelMatrix;
-    materialRef.current.uniforms.scale.value = meshRef.current.scale;
-  }, [time]);
+    const { uniforms } = materialRef.current;
+    uniforms.time.value = state.clock.elapsedTime;
+    uniforms.invModelMatrix.value
+      .copy(meshRef.current.matrixWorld)
+      .invert();
+    uniforms.scale.value.copy(meshRef.current.scale);
+  });
 
   useEffect(() => {
     if (audioRef.current && isExperienceReady && withAudio) {
@@ -232,36 +235,31 @@ function FireElement({ color, time, withAudio = false, ...props }) {
   );
 }
 
-export default function Fire({ time, ...props }) {
+export default function Fire({ ...props }) {
   return (
     <group {...props}>
       {/* Braizer Fires */}
       <FireElement
-        time={time}
         scale={[1.4, 4, 1.4]}
         position={[-13.1, 9.52, -14.4]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[1.4, 4, 1.4]}
         position={[-9.29, 9.52, -14.4]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[1.4, 4, 1.4]}
         position={[21.279, 9.52, -14.4]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[1.4, 4, 1.4]}
         position={[25, 9.52, -14.4]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[1.4, 4, 1.4]}
         position={[28.789, 9.52, -14.4]}
         withAudio={true}
@@ -269,21 +267,18 @@ export default function Fire({ time, ...props }) {
 
       {/* Outside Torches */}
       <FireElement
-        time={time}
         scale={[0.38, 1.4, 0.38]}
         rotation={[0.3, 0, 0]}
         position={[9.1, 10.32, -18.4]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[0.38, 1.4, 0.38]}
         rotation={[0.3, 0, 0]}
         position={[3.28, 10.32, -18.4]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[0.38, 1.4, 0.38]}
         rotation={[0.3, 0, 0]}
         position={[5.69, 17.25, -15.49]}
@@ -292,25 +287,21 @@ export default function Fire({ time, ...props }) {
 
       {/* Inside Torches with Positional Audio */}
       <FireElement
-        time={time}
         scale={[0.38, 2, 0.38]}
         position={[11.27, 8.62, -27.25]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[0.38, 2, 0.38]}
         position={[1.4, 8.62, -27.15]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[0.38, 2, 0.38]}
         position={[11.27, 8.62, -45.25]}
         withAudio={true}
       />
       <FireElement
-        time={time}
         scale={[0.38, 2, 0.38]}
         position={[1.4, 8.62, -45.15]}
         withAudio={true}

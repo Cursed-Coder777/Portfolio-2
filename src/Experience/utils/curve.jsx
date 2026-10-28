@@ -15,7 +15,7 @@ export const cameraCurve = new THREE.CatmullRomCurve3(
     new THREE.Vector3(6.1, 8.6385544864918, -39.15952064804525),
     new THREE.Vector3(-0.6, 9.095692752216793, -44.84820648294106),
     new THREE.Vector3(
-      12.932496218694319,
+      12.93249621869432,
       9.072285787822777,
       -44.69183302104726
     ),
@@ -83,7 +83,7 @@ export const rotationTargets = [
   {
     progress: 0.32,
     rotation: new THREE.Euler(
-      -0.086339131170143176,
+      -0.08633913117014318,
       0.398491298300412,
       -0.1343243154257062
     ),
@@ -91,7 +91,7 @@ export const rotationTargets = [
   {
     progress: 0.36,
     rotation: new THREE.Euler(
-      -0.086339131170143176,
+      -0.08633913117014318,
       0.708491298300412,
       -0.0143243154257062
     ),
@@ -109,7 +109,7 @@ export const rotationTargets = [
     rotation: new THREE.Euler(
       -0.026015217004565497,
       -0.019361968160347905,
-      -0.0405037879475436998
+      -0.0405037879475437
     ),
   },
 
@@ -133,7 +133,7 @@ export const rotationTargets = [
     progress: 0.75,
     rotation: new THREE.Euler(
       -0.05535558580154114,
-      0.32017130864367585,
+      0.3201713086436759,
       0.02072972153013933
     ),
   },
@@ -149,7 +149,7 @@ export const rotationTargets = [
     progress: 0.9,
     rotation: new THREE.Euler(
       0.01492353012229583,
-      -0.073017130864367585,
+      -0.07301713086436759,
       0.02072972153013933
     ),
   },

@@ -5,11 +5,12 @@ Command: npx gltfjsx@6.5.3 Background.glb
 */
 
 import { useMemo } from "react";
-import { useGLTF, Instances, Instance } from "@react-three/drei";
+import { Instances, Instance } from "@react-three/drei";
+import { useGLTFWithKTX2 } from "../utils/useGLTFWithKTX2";
 import { convertMaterialsToBasic } from "../utils/convertToBasic";
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF("/models/Background.glb");
+  const { nodes, materials } = useGLTFWithKTX2("/models/Background.glb");
 
   const newMaterials = useMemo(
     () => convertMaterialsToBasic(materials),
@@ -51,5 +52,3 @@ export default function Model(props) {
     </Instances>
   );
 }
-
-useGLTF.preload("/models/Background.glb");

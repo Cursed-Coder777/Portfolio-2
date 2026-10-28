@@ -27,10 +27,43 @@
       name="description"
       content="Personal portfolio — explore my work in an immersive 3D world."
     />
+    <meta name="theme-color" content="#0b0b0b" />
     <title>Portfolio</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #0b0b0b;
+        color: #fff;
+      }
+
+      .boot-fallback {
+        display: grid;
+        min-height: 100vh;
+        place-content: center;
+        gap: 16px;
+        font-family: sans-serif;
+        text-align: center;
+      }
+
+      .boot-fallback a {
+        color: #ff7700;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot-fallback">
+        <p>Loading portfolio…</p>
+        <a href="/projects">View projects</a>
+      </div>
+    </div>
+    <noscript>
+      <div class="boot-fallback">
+        <p>This portfolio uses JavaScript for its 3D experience.</p>
+        <a href="/projects">View the project archive instead</a>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

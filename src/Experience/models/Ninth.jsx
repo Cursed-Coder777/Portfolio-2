@@ -5,15 +5,19 @@ Command: npx gltfjsx@6.5.3 Ninth.glb
 */
 
 import { useEffect, useState, useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
 import { useGLTFWithKTX2 } from "../utils/useGLTFWithKTX2";
 import { convertMaterialsToBasic } from "../utils/convertToBasic";
 import * as THREE from "three";
 import { useModalStore } from "../../stores/useModalStore";
 import { playSound } from "../../utils/audioSystem.js";
 
-export default function Model({ progress = 0, pulseIntensity = 0, ...props }) {
+export default function Model({ scrollProgressRef, ...props }) {
   const { nodes, materials } = useGLTFWithKTX2("/models/Ninth.glb");
   const [hoveredMesh, setHoveredMesh] = useState(null);
+  const [progress, setProgress] = useState(
+    () => scrollProgressRef?.current ?? 0
+  );
   const { openModal, setModalID, isModalOpen } = useModalStore();
 
   const newMaterials = useMemo(
@@ -37,6 +41,20 @@ export default function Model({ progress = 0, pulseIntensity = 0, ...props }) {
     };
   }, [newMaterials]);
 
+  // Keep the panel glow in sync with the scroll without forcing the parent
+  // Scene (and every model in it) to re-render on every frame. Only this
+  // small component updates, and only when the progress actually moves.
+  useFrame((state) => {
+    const next = Math.max(
+      0,
+      Math.min(1, scrollProgressRef?.current ?? 0)
+    );
+    setProgress((prev) => (Math.abs(prev - next) > 0.002 ? next : prev));
+
+    const pulse = 1 + ((Math.sin(state.clock.elapsedTime * 3) + 1) / 2) * 1.5;
+    derivedMaterials.pulsingMaterial.color.setRGB(pulse, pulse, pulse);
+  });
+
   const getMaterial = useMemo(
     () => (elementID, progressRange) => {
       if (
@@ -49,17 +67,11 @@ export default function Model({ progress = 0, pulseIntensity = 0, ...props }) {
 
       const [min, max] = progressRange;
       if (progress >= min && progress <= max) {
-        const pulseColor = 1 + pulseIntensity * 1.5;
-        derivedMaterials.pulsingMaterial.color.setRGB(
-          pulseColor,
-          pulseColor,
-          pulseColor
-        );
         return derivedMaterials.pulsingMaterial;
       }
       return derivedMaterials.baseMaterial;
     },
-    [hoveredMesh, progress, pulseIntensity, isModalOpen, derivedMaterials]
+    [hoveredMesh, progress, isModalOpen, derivedMaterials]
   );
 
   useEffect(() => {

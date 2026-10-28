@@ -1,0 +1,88 @@
+// Full-viewport fallback shown when the 3D scene cannot initialize.
+.scene-error {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 119, 0, 0.12), transparent 45%),
+    #0b0b0b;
+  color: #fff;
+
+  &__panel {
+    width: min(560px, 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: clamp(24px, 5vw, 48px);
+    background: rgba(17, 17, 17, 0.92);
+  }
+
+  &__eyebrow {
+    margin-bottom: 16px;
+    color: #ff7700;
+    font-family: sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin-bottom: 16px;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.2;
+  }
+
+  &__message {
+    margin-bottom: 32px;
+    color: rgba(255, 255, 255, 0.72);
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__button,
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid #fff;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  &__button {
+    background: #fff;
+    color: #0b0b0b;
+    cursor: pointer;
+
+    &:hover {
+      background: #ff7700;
+      border-color: #ff7700;
+      color: #fff;
+    }
+  }
+
+  &__link {
+    color: #fff;
+
+    &:hover {
+      background: #fff;
+      color: #0b0b0b;
+    }
+  }
+}

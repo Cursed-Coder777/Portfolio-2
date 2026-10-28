@@ -1,6 +1,6 @@
 // Animated eagle following a spline path with skeleton animation and KTX2 textures.
 import { useMemo, useEffect, useRef } from "react";
-import { useGraph } from "@react-three/fiber";
+import { useFrame, useGraph } from "@react-three/fiber";
 import { SkeletonUtils } from "three-stdlib";
 import { useGLTFWithKTX2 } from "../utils/useGLTFWithKTX2";
 import { useAnimations } from "@react-three/drei";
@@ -8,12 +8,12 @@ import { useAnimations } from "@react-three/drei";
 import { convertMaterialsToBasic } from "../utils/convertToBasic";
 import { createBirdPath, getBirdPosition } from "../utils/birdPath";
 
-export default function Bird({ time, speed = 0.01, ...props }) {
+export default function Bird({ speed = 0.01, ...props }) {
   const group = useRef();
   const { scene, animations } = useGLTFWithKTX2("/models/Bird.glb");
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
-  const { actions, names } = useAnimations(animations, group);
+  const { actions } = useAnimations(animations, group);
 
   const newMaterials = useMemo(
     () => convertMaterialsToBasic(materials),
@@ -30,21 +30,13 @@ export default function Bird({ time, speed = 0.01, ...props }) {
     }
   }, [actions]);
 
-  useEffect(() => {
-    if (actions) {
-      const action = actions[names[0]];
-      if (action) {
-        action.time = (time * 1) % action.getClip().duration;
-      }
-    }
-  }, [time, actions, names]);
-
-  useEffect(() => {
-    if (group.current) {
-      const position = getBirdPosition(birdPath, time, speed);
-      group.current.position.copy(position);
-    }
-  }, [time, birdPath, speed]);
+  // The mixer advances on its own; the flight path just needs the clock.
+  useFrame((state) => {
+    if (!group.current) return;
+    group.current.position.copy(
+      getBirdPosition(birdPath, state.clock.elapsedTime, speed)
+    );
+  });
 
   return (
     <group ref={group} {...props} dispose={null}>

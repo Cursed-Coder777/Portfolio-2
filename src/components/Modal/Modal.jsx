@@ -11,7 +11,7 @@
 //   4. While open, cursor is forced to "auto" and scroll progress updates
 //      are paused (checked in App.jsx's handleScroll).
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./Modal.scss";
 import { useModalStore } from "../../stores/useModalStore";
 import { modalContent } from "../../data/modalContent";
@@ -76,7 +76,6 @@ const Modal = () => {
           <svg
             width="20"
             height="20"
-            class=""
             viewBox="0 0 130 134"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

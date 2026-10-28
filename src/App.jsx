@@ -9,14 +9,19 @@
 //      lets native scroll through; R3F eventSource on #root captures clicks
 //   6. Modal blocks scroll progress updates while open (but native scroll still works)
 
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import "./App.scss";
-import Experience from "./Experience/Experience";
 import Modal from "./components/Modal/Modal";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 import NavBar from "./components/NavBar/NavBar";
+import SceneErrorBoundary from "./components/ErrorBoundary/SceneErrorBoundary";
 import { useExperienceStore } from "./stores/experienceStore";
 import { useModalStore } from "./stores/useModalStore";
+
+// The 3D bundle (Three.js + R3F + drei) is by far the heaviest JavaScript.
+// Loading it lazily lets the loading screen paint first, and keeps a failed
+// 3D chunk from taking the whole page down.
+const Experience = lazy(() => import("./Experience/Experience"));
 
 function App() {
   const isExperienceReady = useExperienceStore((s) => s.isExperienceReady);
@@ -60,9 +65,13 @@ function App() {
       {/* Tall invisible div that makes the page scrollable */}
       <div id="scroll-container" />
       {/* Fixed overlay that covers the viewport — the 3D canvas lives here */}
-      <div id="canvas-wrapper">
-        <Experience scrollProgressRef={scrollProgressRef} />
-      </div>
+      <SceneErrorBoundary>
+        <div id="canvas-wrapper">
+          <Suspense fallback={null}>
+            <Experience scrollProgressRef={scrollProgressRef} />
+          </Suspense>
+        </div>
+      </SceneErrorBoundary>
     </>
   );
 }

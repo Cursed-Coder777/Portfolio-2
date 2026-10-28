@@ -16,18 +16,23 @@ const sounds = {
     src: [`/audio/music/background_music.${getAudioFileExtension()}`],
     loop: true,
     html5: true,
+    // Do not compete with the 29 MB 3D model download before the user has
+    // even entered. Howler starts fetching when play() is called instead.
+    preload: false,
     volume: 0.8,
   }),
   backgroundAmbience: new Howl({
     src: [`/audio/sfx/background_ambience.${getAudioFileExtension()}`],
     loop: true,
     html5: true,
+    preload: false,
     volume: 0.9,
   }),
   thumpHover: new Howl({
     src: [`/audio/sfx/thump_hover.${getAudioFileExtension()}`],
     loop: false,
     html5: true,
+    preload: false,
     volume: 1,
   }),
 };

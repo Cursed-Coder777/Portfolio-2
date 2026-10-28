@@ -95,8 +95,24 @@
   }
 
   @media (max-width: 768px) {
+    &__item {
+      max-width: calc(100% - 64px);
+    }
+
+    &__item--left {
+      left: 32px;
+    }
+
     &__item--right {
-      right: 33px;
+      right: 32px;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+    }
+
+    &__subtitle {
+      font-size: 1.0625rem;
     }
   }
 }

@@ -1,24 +1,31 @@
 // Instanced trees with custom shader sway animation, loaded from Eighth.glb with KTX2 textures.
 import { useRef, useEffect, useMemo, forwardRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import { Instance, Instances } from "@react-three/drei";
 import { useGLTFWithKTX2 } from "../utils/useGLTFWithKTX2";
 import { convertMaterialsToBasic } from "../utils/convertToBasic";
 import * as THREE from "three";
 
-const TreeSwayMaterial = forwardRef(({ time, ...props }, ref) => {
+const TreeSwayMaterial = forwardRef(({ map }, ref) => {
   const uniforms = useRef({
     time: { value: 0 },
     swayAmount: { value: 0.3 },
     swaySpeed: { value: 0.7 },
     baseFrequency: { value: 0.8 },
-    map: { value: props.map },
+    map: { value: map },
+  });
+
+  // The sway was previously driven by a prop that only changed because the
+  // whole scene re-rendered every frame. Read the clock directly instead.
+  useFrame((state) => {
+    if (uniforms.current) {
+      uniforms.current.time.value = state.clock.elapsedTime;
+    }
   });
 
   useEffect(() => {
-    if (uniforms.current) {
-      uniforms.current.time.value = time;
-    }
-  }, [time]);
+    uniforms.current.map.value = map;
+  }, [map]);
 
   const vertexShader = `
     uniform float time;
@@ -98,6 +105,8 @@ const TreeSwayMaterial = forwardRef(({ time, ...props }, ref) => {
   );
 });
 
+TreeSwayMaterial.displayName = "TreeSwayMaterial";
+
 export default function Model(props) {
   const { nodes, materials } = useGLTFWithKTX2("/models/Eighth.glb");
   const newMaterials = useMemo(
@@ -117,7 +126,6 @@ export default function Model(props) {
       <Instances limit={10} geometry={nodes.Eighth_Tree_Baked.geometry}>
         <TreeSwayMaterial
           ref={materialRef}
-          time={props.time}
           map={newMaterials.Eighth_Baked.map}
           transparent={newMaterials.Eighth_Baked.transparent}
           alphaTest={newMaterials.Eighth_Baked.alphaTest}
